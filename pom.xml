@@ -17,7 +17,7 @@
         <cucumber-junit-platform-engine.version>7.2.3</cucumber-junit-platform-engine.version>
         <encoding>UTF-8</encoding>
         <tags></tags>
-        <webdriver.base.url>http://claimstest.clientele.local/</webdriver.base.url>
+        <webdriver.base.url>https://cbc-uat.clientele.co.za/BrokerOnline/Login</webdriver.base.url>
     </properties>
     <dependencies>
         <dependency>
