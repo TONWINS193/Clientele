@@ -33,15 +33,30 @@ public class BrokerOnlineStep extends PageObject {
     @When("user click on new sale")
     public void user_click_on_new_sale() throws InterruptedException {
         brokerOnline.newSale();
+
     }
     @When("user select product on a dropdown lists")
-    public void user_select_product_on_a_dropdown_lists() {
+    public void user_select_product_on_a_dropdown_lists() throws InterruptedException {
         brokerOnline.selectProduct("Clientèle Legal Business Plan");
+        brokerOnline.continueBtn();
+
 
     }
     @Then("user enter application number and continue")
-    public void user_enter_application_number_and_continue() {
-        brokerOnline.appNumber("");
+    public void user_enter_application_number_and_continue() throws InterruptedException {
+        //brokerOnline.continueBtn();
+        brokerOnline.companyName("TRY");
+        brokerOnline.businessType("Churches");
+        brokerOnline.textNum("8908038462087");
+        brokerOnline.employeeNum("12");
+        brokerOnline.mobNumb("0601234230");
+        brokerOnline.workNum("0601234230");
+        brokerOnline.annualTurnOver("Less than 2,000,000");
+        brokerOnline.address("AB 12", "polei", "plot 3");
+        brokerOnline.underWriting("0", "Yes", "Yes", "Education & Training", "Biblical manner");
+        brokerOnline.detailsForm("Mr","98080394551810");
+        brokerOnline.iDPassNumber("ID Number");
+        brokerOnline.completeForm("Joe", "Masemola", "0601234101", "Member", "Yes");
 
     }
 
