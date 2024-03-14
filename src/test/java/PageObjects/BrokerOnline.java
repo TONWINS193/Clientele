@@ -5,6 +5,7 @@ import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -71,7 +72,7 @@ public class BrokerOnline extends PageObject {
 
     @Step("Enters Access Code and Confirm")
     public void enterCode(String code) {
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(4));
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
         WebElement accessCode = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(AccessCodeXpath)));
 
@@ -84,7 +85,7 @@ public class BrokerOnline extends PageObject {
 
     @Step("Enters Broker Code")
     public void brokerCode(String BCode) {
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(4));
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
         WebElement brokerCode = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(BrokerCodeXpath)));
 
@@ -274,23 +275,22 @@ public class BrokerOnline extends PageObject {
         selectObject.selectByVisibleText(IdType);
     }
 
-    @FindBy(xpath = "//*[@id=\"b46-Input_PassportNumber\"]")
-    private WebElement passport;
-
     @FindBy(xpath = "//*[@id=\"b46-Input_IdentityNumber\"]")
     private WebElement Identity;
+
+    @FindBy(xpath = "//*[@id=\"b46-Input_PassportNumber\"]")
+    private WebElement passport;
 
     @Step("Enter ID or Passport number")
     public void iDPassNumber(String IDPassNumb) {
 
         if(isIdNumbVisible())
-
     {
-        $(By.xpath("//*[@id=\"b46-Input_PassportNumber\"]")).sendKeys(IDPassNumb);
+        Identity.sendKeys(IDPassNumb);
     } else if(isPassNumVisible())
 
     {
-        $(By.xpath("//*[@id=\"b46-Input_IdentityNumber\"]")).sendKeys(IDPassNumb);
+        passport.sendKeys(IDPassNumb);
     } else
 
     {
@@ -303,12 +303,13 @@ public class BrokerOnline extends PageObject {
 
 
     private boolean isIdNumbVisible() {
-        return passport.isDisplayed();
+        return Identity.isDisplayed();
+
     }
 
 
     private boolean isPassNumVisible() {
-        return Identity.isDisplayed();
+        return passport.isDisplayed();
 
     }
 
@@ -344,8 +345,10 @@ public class BrokerOnline extends PageObject {
     public void sameAsContactPerson(){
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
-        WebElement checkBox = $(By.xpath(SameAsContactPersonXpath));
+        WebElement checkBox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SameAsContactPersonXpath)));
         checkBox.click();
+
+       $(By.xpath(ContinueBtnXpath)).click();
 
    }
 
@@ -353,7 +356,7 @@ public class BrokerOnline extends PageObject {
     public void sameAsRegBusiness(String jobPosition, String tittle, String IdentityType){
        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
-       WebElement checkBox = $(By.xpath(SameAsRegBusinessXpath));
+       WebElement checkBox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SameAsRegBusinessXpath)));
        checkBox.click();
 
        WebElement dropdown = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"b50-Dropdown_JobPosition\"]")));
@@ -376,11 +379,11 @@ public class BrokerOnline extends PageObject {
 
    }
 
-    @FindBy(xpath = "//*[@id=\"b46-Input_PassportNumber\"]")
-    private WebElement passportNum;
-
-    @FindBy(xpath = "//*[@id=\"b46-Input_IdentityNumber\"]")
+    @FindBy(xpath = "//*[@id=\"b50-Input_IdentityNumber\"]")//*[@id="b46-Input_IdentityNumber"]
     private WebElement IdentityNum;
+
+    @FindBy(xpath = "//*[@id=\"b50-Input_PassportNumber\"]")
+    private WebElement passportNum;
 
     @Step("Enter ID or Passport number")
     public void iDPassNumb(String IDPassNumb) {
@@ -388,11 +391,11 @@ public class BrokerOnline extends PageObject {
         if(isIdVisible())
 
         {
-            $(By.xpath("//*[@id=\"b50-Input_PassportNumber\"]")).sendKeys(IDPassNumb);
+            IdentityNum.sendKeys(IDPassNumb);
         } else if(isPassNumbVisible())
 
         {
-            $(By.xpath("//*[@id=\"b50-Input_IdentityNumber\"]")).sendKeys(IDPassNumb);
+            passportNum.sendKeys(IDPassNumb);
         } else
 
         {
@@ -401,16 +404,14 @@ public class BrokerOnline extends PageObject {
 
     }
 
-
-
-
     private boolean isIdVisible() {
-        return passport.isDisplayed();
+        return IdentityNum.isDisplayed();
+
     }
 
 
     private boolean isPassNumbVisible() {
-        return Identity.isDisplayed();
+        return passportNum.isDisplayed();
 
     }
 
@@ -452,7 +453,7 @@ public class BrokerOnline extends PageObject {
 
         Select selectObject4 = new Select(dropdown4);
 
-        selectObject4.selectByVisibleText(pointOFSaleVerified);
+        selectObject4.selectByVisibleText(debitDay);
 
         $(By.xpath(ContinueBtnXpath)).click();
 
@@ -462,10 +463,35 @@ public class BrokerOnline extends PageObject {
     public void saleConfirmation(){
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
-        WebElement checkBox = $(By.xpath("(//input[@id='b51-Checkbox2'])[1]"));
+        WebElement checkBox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input[@id='b51-Checkbox2'])[1]")));
 
         checkBox.click();
 
+        WebElement clientSign = $(By.xpath("(//button[@class='btn ThemeGrid_Width4'])[1]"));
+        clientSign.click();
+
+        // $(By.xpath("(//button[normalize-space()='Accept & Complete Sale'])[1]")).click();
+
+    }
+
+    @Step("Sign on signature pad")
+    public void signature(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+
+        WebElement signField =wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("b51-b19-SignatureCanvas")));
+
+        Actions actions = new Actions(getDriver());
+
+        actions.moveToElement(signField)
+                .clickAndHold()
+                .moveByOffset(50, 0)
+                .moveByOffset(0, 50)
+                .moveByOffset(-50, 0)
+                .moveByOffset(0, -50)
+                .release()
+                .perform();
+
+        $(By.xpath("//span[normalize-space()='Done']")).click();
 
 
     }

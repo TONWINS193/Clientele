@@ -45,19 +45,24 @@ public class BrokerOnlineStep extends PageObject {
     @Then("user enter application number and continue")
     public void user_enter_application_number_and_continue() throws InterruptedException {
         //brokerOnline.continueBtn();
-        brokerOnline.companyName("TRY");
+        brokerOnline.companyName("ZBC ");
         brokerOnline.businessType("Churches");
-        brokerOnline.textNum("8908038462087");
+        brokerOnline.textNum("0008152197185");
         brokerOnline.employeeNum("12");
         brokerOnline.mobNumb("0601234230");
         brokerOnline.workNum("0601234230");
         brokerOnline.annualTurnOver("Less than 2,000,000");
         brokerOnline.address("AB 12", "polei", "plot 3");
         brokerOnline.underWriting("0", "Yes", "Yes", "Education & Training", "Biblical manner");
-        brokerOnline.detailsForm("Mr","98080394551810");
-        brokerOnline.iDPassNumber("ID Number");
+        brokerOnline.detailsForm("Mr","ID Number");
+        brokerOnline.iDPassNumber("8609037262185");
         brokerOnline.completeForm("Joe", "Masemola", "0601234101", "Member", "Yes");
-
+        brokerOnline.sameAsContactPerson();
+        brokerOnline.sameAsRegBusiness("Director", "Mr", "ID Number");
+        brokerOnline.iDPassNumb("8604037119089");
+        brokerOnline.payerDetails("Mavern", "Mango", "0601234230", "0601234230", "NEDBANK LIMITED", "Savings Account", "1234", "Yes", "25");
+        brokerOnline.saleConfirmation();
+        brokerOnline.signature();
     }
 
 }
